@@ -1,33 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import { useState } from 'react'
+import WeatherCard from './components/WeatherCard'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
+  const miasta = [
+    {miasto: 'warszawa', temp: 18, pogoda: "slonecznie" , wiatr: 90},
+    {miasto: 'wroclaw', temp: 19, pogoda: "deszczowo" , wiatr: 90 },
+    {miasto: 'krakow', temp: 4, pogoda: "witrzenie" , wiatr: 90 },
+    {miasto: 'kyiv', temp: 9, pogoda: "slonecznie" , wiatr: 90},
+    {miasto: 'new york', temp: 7, pogoda: "deszczowo" , wiatr: 90},
+    {miasto: 'dofodf', temp: 3, wiatr: 90, pogoda: "slonecznie"}
+  ]
+
+  const [wybraneMiasto, setWybraneMiasto] = useState(null);
+
+
+  const handleClick = (miasto) =>{
+   setWybraneMiasto(miasto);
+  }
+
+
+
+return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Pogoda</h1>
+     
+      {miasta.map((dane) =>{
+          return(
+           <WeatherCard miasto={dane.miasto} temp={dane.temp} onClick={() => handleClick(dane)}></WeatherCard>
+          )
+        }
+      )}
+
+      {wybraneMiasto && (
+        <div>
+          <h3>szczegoly pogody dla {wybraneMiasto.miasto} </h3>
+          <h3>szczegoly pogody dla {wybraneMiasto.temp} </h3>
+          <p>Wiatr:{wybraneMiasto.wiatr}</p>
+          <p>Pogoda:{wybraneMiasto.pogoda}</p>
+        </div>
+      )}
+
+
     </>
   )
 }
